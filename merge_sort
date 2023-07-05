@@ -1,0 +1,90 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Función para combinar dos subarreglos ordenados
+void merge(vector<int>& arr, int left, int mid, int right) {
+    int n1 = mid - left + 1;  // Tamaño del subarreglo izquierdo
+    int n2 = right - mid;     // Tamaño del subarreglo derecho
+    
+    // Crear subarreglos temporales
+    vector<int> leftArr(n1);
+    vector<int> rightArr(n2);
+    
+    // Copiar los elementos a los subarreglos temporales
+    for (int i = 0; i < n1; i++) {
+        leftArr[i] = arr[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        rightArr[j] = arr[mid + 1 + j];
+    }
+    
+    // Combinar los subarreglos en orden ascendente
+    int i = 0;  // Índice para el subarreglo izquierdo
+    int j = 0;  // Índice para el subarreglo derecho
+    int k = left;  // Índice para el subarreglo fusionado
+    
+    while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k] = leftArr[i];
+            i++;
+        } else {
+            arr[k] = rightArr[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // Agregar los elementos restantes del subarreglo izquierdo (si los hay)
+    while (i < n1) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
+    }
+    
+    // Agregar los elementos restantes del subarreglo derecho (si los hay)
+    while (j < n2) {
+        arr[k] = rightArr[j];
+        j++;
+        k++;
+    }
+}
+
+// Función principal de Merge Sort
+void mergeSort(vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        
+        // Ordenar recursivamente las dos mitades
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        
+        // Combinar las dos mitades ordenadas
+        merge(arr, left, mid, right);
+    }
+}
+
+// Función de utilidad para imprimir un vector
+void printVector(const vector<int>& arr) {
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+// Ejemplo de uso
+int main() {
+    vector<int> arr = {5, 2, 8, 12, 3};
+    int n = arr.size();
+    
+    cout << "Arreglo original: ";
+    printVector(arr);
+    
+    mergeSort(arr, 0, n - 1);
+    
+    cout << "Arreglo ordenado: ";
+    printVector(arr);
+    
+    return 0;
+}
