@@ -1,0 +1,42 @@
+#include <iostream>
+
+double potencia(double base, int exponente) {
+    // Caso base: si el exponente es 0, la potencia es 1
+    if (exponente == 0) {
+        return 1.0;
+    }
+    
+    // Dividir el exponente por la mitad
+    int mitad = exponente / 2;
+    
+    // Calcular la potencia de la mitad
+    double resultadoMitad = potencia(base, mitad);
+    
+    // Si el exponente es par, el resultado es el cuadrado de la potencia de la mitad
+    if (exponente % 2 == 0) {
+        return resultadoMitad * resultadoMitad;
+    }
+    // Si el exponente es impar, el resultado es el producto de la potencia de la mitad por la base
+    else {
+        return resultadoMitad * resultadoMitad * base;
+    }
+}
+
+int main() {
+    double base;
+    int exponente;
+
+    // Solicitar al usuario la base y el exponente
+    std::cout << "Ingrese la base: ";
+    std::cin >> base;
+    std::cout << "Ingrese el exponente: ";
+    std::cin >> exponente;
+
+    // Calcular la potencia utilizando el algoritmo de divide y vencerás
+    double resultado = potencia(base, exponente);
+
+    // Mostrar el resultado
+    std::cout << "El resultado es: " << resultado << std::endl;
+
+    return 0;
+}
